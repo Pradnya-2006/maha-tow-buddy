@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Eye, EyeOff, Loader2, LogIn } from "lucide-react";
+import { Eye, EyeOff, Loader2, LogIn, ShieldCheck } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +18,12 @@ const Login = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
+  
+  // Admin login state
+  const [adminEmail, setAdminEmail] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
+  const [showAdminPassword, setShowAdminPassword] = useState(false);
+  const [rememberAdmin, setRememberAdmin] = useState(false);
 
   const handleEmailLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,6 +70,21 @@ const Login = () => {
     }, 1500);
   };
 
+  const handleAdminLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!adminEmail || !adminPassword) {
+      toast.error("Please fill in all admin credentials");
+      return;
+    }
+
+    setIsLoading(true);
+    // Simulate API call
+    setTimeout(() => {
+      setIsLoading(false);
+      toast.error("Invalid admin credentials. Please try again.");
+    }, 1500);
+  };
+
   return (
     <Layout>
       <div className="bg-gradient-to-r from-gov-blue to-blue-700 text-white py-10">
@@ -82,9 +104,13 @@ const Login = () => {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="email">
-              <TabsList className="grid w-full grid-cols-2">
+              <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="email">Email</TabsTrigger>
                 <TabsTrigger value="phone">Phone</TabsTrigger>
+                <TabsTrigger value="admin" className="bg-amber-100 hover:bg-amber-200">
+                  <ShieldCheck className="mr-1 h-4 w-4" />
+                  Admin
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="email">
@@ -199,6 +225,76 @@ const Login = () => {
                     </Button>
                   </form>
                 )}
+              </TabsContent>
+
+              <TabsContent value="admin">
+                <form onSubmit={handleAdminLogin} className="space-y-4 mt-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="adminEmail">Admin Email</Label>
+                    <Input
+                      id="adminEmail"
+                      type="email"
+                      placeholder="Enter admin email"
+                      value={adminEmail}
+                      onChange={(e) => setAdminEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <Label htmlFor="adminPassword">Password</Label>
+                      <a href="#" className="text-xs text-gov-blue hover:underline">
+                        Forgot admin password?
+                      </a>
+                    </div>
+                    <div className="relative">
+                      <Input
+                        id="adminPassword"
+                        type={showAdminPassword ? "text" : "password"}
+                        placeholder="Enter admin password"
+                        value={adminPassword}
+                        onChange={(e) => setAdminPassword(e.target.value)}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute right-0 top-0 h-full"
+                        onClick={() => setShowAdminPassword(!showAdminPassword)}
+                      >
+                        {showAdminPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="rememberAdmin" 
+                      checked={rememberAdmin}
+                      onCheckedChange={(checked) => setRememberAdmin(checked === true)}
+                    />
+                    <label
+                      htmlFor="rememberAdmin"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      Remember admin credentials
+                    </label>
+                  </div>
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-amber-600 hover:bg-amber-700" 
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                      <ShieldCheck className="mr-2 h-4 w-4" />
+                    )}
+                    {isLoading ? "Logging in..." : "Admin Login"}
+                  </Button>
+                </form>
               </TabsContent>
             </Tabs>
           </CardContent>
