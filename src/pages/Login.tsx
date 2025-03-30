@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,7 @@ import { Eye, EyeOff, Loader2, LogIn, ShieldCheck } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +20,6 @@ const Login = () => {
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   
-  // Admin login state
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
   const [showAdminPassword, setShowAdminPassword] = useState(false);
@@ -33,7 +33,6 @@ const Login = () => {
     }
 
     setIsLoading(true);
-    // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
       toast.error("Invalid credentials. Please try again.");
@@ -47,7 +46,6 @@ const Login = () => {
     }
 
     setIsLoading(true);
-    // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
       setOtpSent(true);
@@ -63,7 +61,6 @@ const Login = () => {
     }
 
     setIsLoading(true);
-    // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
       toast.error("Invalid OTP. Please try again.");
@@ -72,16 +69,16 @@ const Login = () => {
 
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!adminEmail || !adminPassword) {
-      toast.error("Please fill in all admin credentials");
-      return;
-    }
-
     setIsLoading(true);
-    // Simulate API call
+    
     setTimeout(() => {
+      if (adminEmail === "admin@mahatowing.gov.in" && adminPassword === "admin123") {
+        toast.success("Admin login successful!");
+        navigate("/admin/dashboard");
+      } else {
+        toast.error("Invalid admin credentials");
+      }
       setIsLoading(false);
-      toast.error("Invalid admin credentials. Please try again.");
     }, 1500);
   };
 

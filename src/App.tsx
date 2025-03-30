@@ -12,6 +12,8 @@ import Rules from "./pages/Rules";
 import Login from "./pages/Login";
 import Report from "./pages/Report";
 import NotFound from "./pages/NotFound";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminAddDetails from "./pages/AdminAddDetails";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +31,11 @@ const App = () => (
           <Route path="/rules" element={<Rules />} />
           <Route path="/login" element={<Login />} />
           <Route path="/report" element={<Report />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/add-details" element={<AdminAddDetails />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
