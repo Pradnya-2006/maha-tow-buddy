@@ -3,7 +3,7 @@ import { type DialogProps } from "@radix-ui/react-dialog"
 import { Command as CommandPrimitive } from "cmdk"
 import { Search } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/models/utils"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 
 const Command = React.forwardRef<
@@ -21,7 +21,10 @@ const Command = React.forwardRef<
 ))
 Command.displayName = CommandPrimitive.displayName
 
-interface CommandDialogProps extends DialogProps {}
+interface CommandDialogProps extends DialogProps {
+  // Extending DialogProps with no additional properties
+  // This is valid as we're using all DialogProps properties
+}
 
 const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   return (
