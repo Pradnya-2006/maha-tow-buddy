@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Layout from '@/components/layout/Layout';
 import { toast } from 'sonner';
 
 interface TowedVehicleForm {
@@ -66,7 +65,7 @@ const AdminAddDetails = () => {
   };
 
   return (
-    <Layout>
+    <>
       <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white py-10">
         <div className="gov-container">
           <h1 className="text-3xl font-bold">Add Towed Vehicle Details</h1>
@@ -203,7 +202,7 @@ const AdminAddDetails = () => {
           </CardContent>
         </Card>
       </div>
-    </Layout>
+    </>
   );
 };
 

@@ -44,11 +44,6 @@ const towedVehicleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  towingTime: {
-    type: Date,
-    required: true,
-    default: Date.now,
-  },
   towingDate: {
     type: Date,
     required: true,
